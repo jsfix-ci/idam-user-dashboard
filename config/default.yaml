@@ -24,7 +24,7 @@ services:
     scope: 'openid profile roles manage-user search-user create-user'
     responseType: 'code'
 session:
-  secret: 'local'
+  secret: 'LONG_RANDOM_STRING'
   cookie:
     name: 'idam-user-dashboard-session'
   redis:
