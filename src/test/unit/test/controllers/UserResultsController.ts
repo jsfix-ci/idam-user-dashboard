@@ -48,7 +48,7 @@ describe('User results controller', () => {
 
     req.body.search = email;
     req.scope.cradle.api = mockApi;
-    req.session = { user: { assignableRoles: [] } };
+    req.appSession = { user: { assignableRoles: [] } };
     await controller.post(req, res);
     expect(res.render).toBeCalledWith('user-details', { content: { user: results[0], showDelete: false } });
   });
@@ -74,7 +74,7 @@ describe('User results controller', () => {
 
     req.body.search = userId;
     req.scope.cradle.api = mockApi;
-    req.session = { user: { assignableRoles: [] } };
+    req.appSession = { user: { assignableRoles: [] } };
     await controller.post(req, res);
     expect(res.render).toBeCalledWith('user-details', { content: { user: results[0], showDelete: false } });
   });
@@ -100,7 +100,7 @@ describe('User results controller', () => {
 
     req.body.search = ssoId;
     req.scope.cradle.api = mockApi;
-    req.session = { user: { assignableRoles: [] } };
+    req.appSession = { user: { assignableRoles: [] } };
     await controller.post(req, res);
     expect(res.render).toBeCalledWith('user-details', { content: { user: results[0], showDelete: false } });
   });
@@ -139,7 +139,7 @@ describe('User results controller', () => {
 
     req.body.search = email;
     req.scope.cradle.api = mockApi;
-    req.session = { user: { assignableRoles: [] } };
+    req.appSession = { user: { assignableRoles: [] } };
     await controller.post(req, res);
     expect(res.render).toBeCalledWith('user-details', { content: { user: expectedResults[0], showDelete: false } });
   });

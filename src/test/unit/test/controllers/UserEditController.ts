@@ -34,7 +34,7 @@ describe('User edit controller', () => {
 
     when(mockApi.getUserById).calledWith(postData._userId).mockReturnValue(Promise.resolve(apiData));
     req.body = postData;
-    req.session = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
 
     const expectedRoleAssignments = [
       {
@@ -83,7 +83,7 @@ describe('User edit controller', () => {
     when(mockApi.getUserById).calledWith(postData._userId).mockReturnValue(Promise.resolve(originalUserApiData));
     when(mockApi.editUserById).calledWith(postData._userId, { forename: postData.forename }).mockReturnValue(Promise.resolve(updatedUserApiData));
     req.body = postData;
-    req.session = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
 
     const expectedRoleAssignments = [
       {
@@ -122,7 +122,7 @@ describe('User edit controller', () => {
 
     when(mockApi.getUserById).calledWith(originalUserData.id).mockReturnValue(Promise.resolve(originalUserData));
     req.body = { _userId: originalUserData.id, _action: 'save', ...updatedUserData};
-    req.session = { user: { assignableRoles: ['IDAM_ADMIN_USER'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_ADMIN_USER'] } };
 
     await controller.post(req, res);
     expect(mockApi.getUserById).toBeCalledWith(originalUserData.id);
@@ -175,7 +175,7 @@ describe('User edit controller', () => {
 
     when(mockApi.getUserById).calledWith(originalUserData.id).mockReturnValue(Promise.resolve(originalUserData));
     req.body = { _userId: originalUserData.id, _action: 'save', ...updatedUserData};
-    req.session = { user: { assignableRoles: ['IDAM_ADMIN_USER'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_ADMIN_USER'] } };
 
     await controller.post(req, res);
     expect(mockApi.getUserById).toBeCalledWith(originalUserData.id);
@@ -229,7 +229,7 @@ describe('User edit controller', () => {
 
     when(mockApi.getUserById).calledWith(originalUserData.id).mockReturnValue(Promise.resolve(originalUserData));
     req.body = { _userId: originalUserData.id, _action: 'save', ...updatedUserData};
-    req.session = { user: { assignableRoles: ['IDAM_ADMIN_USER', 'IDAM_TEST_USER'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_ADMIN_USER', 'IDAM_TEST_USER'] } };
 
     await controller.post(req, res);
     expect(mockApi.getUserById).toBeCalledWith(originalUserData.id);
@@ -290,7 +290,7 @@ describe('User edit controller', () => {
     when(mockApi.getUserById).calledWith(originalUserData.id).mockReturnValue(Promise.resolve(originalUserData));
     when(mockApi.getAssignableRoles).calledWith(['IDAM_ADMIN_USER', 'IDAM_SUPER_USER']).mockReturnValue(Promise.resolve(['IDAM_ADMIN_USER', 'IDAM_TEST_USER']));
     req.body = { _userId: originalUserData.id, _action: 'save', ...updatedUserData};
-    req.session = { user: { id: originalUserData.id, assignableRoles: ['IDAM_ADMIN_USER'] } };
+    req.appSession = { user: { id: originalUserData.id, assignableRoles: ['IDAM_ADMIN_USER'] } };
 
     await controller.post(req, res);
     expect(mockApi.getUserById).toBeCalledWith(originalUserData.id);
@@ -361,7 +361,7 @@ describe('User edit controller', () => {
     when(mockApi.getUserById).calledWith(postData._userId).mockReturnValue(Promise.resolve(originalUserData));
     when(mockApi.editUserById).calledWith(postData._userId, { forename: postData.forename }).mockReturnValue(Promise.resolve(updatedUserData));
     req.body = postData;
-    req.session = { user: { assignableRoles: ['IDAM_ADMIN_USER'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_ADMIN_USER'] } };
 
     await controller.post(req, res);
 
@@ -417,7 +417,7 @@ describe('User edit controller', () => {
 
     when(mockApi.getUserById).calledWith(originalUserData.id).mockReturnValue(Promise.resolve(originalUserData));
     req.body = { _userId: originalUserData.id, _action: 'save', ...updatedUserData};
-    req.session = { user: { assignableRoles: ['idam-mfa-disabled'] } };
+    req.appSession = { user: { assignableRoles: ['idam-mfa-disabled'] } };
 
     await controller.post(req, res);
     expect(mockApi.getUserById).toBeCalledWith(originalUserData.id);
@@ -470,7 +470,7 @@ describe('User edit controller', () => {
 
     when(mockApi.getUserById).calledWith(originalUserData.id).mockReturnValue(Promise.resolve(originalUserData));
     req.body = { _userId: originalUserData.id, _action: 'save', ...updatedUserData};
-    req.session = { user: { assignableRoles: ['idam-mfa-disabled'] } };
+    req.appSession = { user: { assignableRoles: ['idam-mfa-disabled'] } };
 
     await controller.post(req, res);
     expect(mockApi.getUserById).toBeCalledWith(originalUserData.id);
@@ -525,7 +525,7 @@ describe('User edit controller', () => {
 
     when(mockApi.getUserById).calledWith(originalUserData.id).mockReturnValue(Promise.resolve(originalUserData));
     req.body = { _userId: originalUserData.id, _action: 'save', ...updatedUserData};
-    req.session = { user: { assignableRoles: ['IDAM_ADMIN_USER', 'idam-mfa-disabled'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_ADMIN_USER', 'idam-mfa-disabled'] } };
 
     await controller.post(req, res);
     expect(mockApi.getUserById).toBeCalledWith(originalUserData.id);
@@ -588,7 +588,7 @@ describe('User edit controller', () => {
 
     when(mockApi.getUserById).calledWith(originalUserData.id).mockReturnValue(Promise.resolve(originalUserData));
     req.body = { _userId: originalUserData.id, _action: 'save', ...updatedUserData};
-    req.session = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
 
     const expectedRoleAssignments = [
       {
@@ -630,7 +630,7 @@ describe('User edit controller', () => {
 
     when(mockApi.getUserById).calledWith(originalUserData.id).mockReturnValue(Promise.resolve(originalUserData));
     req.body = { _userId: originalUserData.id, _action: 'save', ...updatedUserData};
-    req.session = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
 
     const expectedRoleAssignments = [
       {
@@ -676,7 +676,7 @@ describe('User edit controller', () => {
     when(mockApi.getUserById).calledWith(postData._userId).mockReturnValue(Promise.resolve(originalUserApiData));
     when(mockApi.editUserById).calledWith(postData._userId, { forename: postData.forename }).mockReturnValue(Promise.reject());
     req.body = postData;
-    req.session = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
+    req.appSession = { user: { assignableRoles: ['IDAM_SUPER_USER'] } };
 
     const expectedRoleAssignments = [
       {

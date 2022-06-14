@@ -30,7 +30,7 @@ export class UserResultsController extends RootController {
 
         this.preprocessSearchResults(user);
         return super.post(req, res, 'user-details', {
-          content: { user, showDelete: this.canDeleteUser(req.session.user, user)}
+          content: { user, showDelete: this.canDeleteUser(req.appSession.user, user)}
         });
       }
 

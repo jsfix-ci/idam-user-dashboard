@@ -64,7 +64,7 @@ describe('Add user details controller', () => {
     when(mockApi.getAllServices).calledWith().mockReturnValue(servicesWithoutPrivateBeta);
 
     req.body.email = email;
-    req.session = { user: { assignableRoles: [UserType.Citizen] } };
+    req.appSession = { user: { assignableRoles: [UserType.Citizen] } };
     req.scope.cradle.api = mockApi;
 
     await controller.post(req, res);
@@ -77,7 +77,7 @@ describe('Add user details controller', () => {
     when(mockApi.getAllServices).calledWith().mockReturnValue(servicesWithPrivateBeta);
 
     req.body.email = email;
-    req.session = { user: { assignableRoles: [UserType.Citizen] } };
+    req.appSession = { user: { assignableRoles: [UserType.Citizen] } };
     req.scope.cradle.api = mockApi;
 
     await controller.post(req, res);
@@ -90,7 +90,7 @@ describe('Add user details controller', () => {
     when(mockApi.getAllServices).calledWith().mockReturnValue(servicesWithPrivateBeta);
 
     req.body.email = email;
-    req.session = { user: { assignableRoles: [] } };
+    req.appSession = { user: { assignableRoles: [] } };
     req.scope.cradle.api = mockApi;
 
     await controller.post(req, res);
@@ -160,7 +160,7 @@ describe('Add user details controller', () => {
     req.body.forename = '';
     req.body.surname = name;
     req.body.userType = UserType.Support;
-    req.session = { user: { assignableRoles: [UserType.Citizen] } };
+    req.appSession = { user: { assignableRoles: [UserType.Citizen] } };
     req.scope.cradle.api = mockApi;
 
     when(mockApi.getAllServices).calledWith().mockReturnValue(servicesWithoutPrivateBeta);
@@ -189,7 +189,7 @@ describe('Add user details controller', () => {
     req.body.forename = name;
     req.body.surname = '';
     req.body.userType = UserType.Support;
-    req.session = { user: { assignableRoles: [UserType.Citizen] } };
+    req.appSession = { user: { assignableRoles: [UserType.Citizen] } };
     req.scope.cradle.api = mockApi;
 
     when(mockApi.getAllServices).calledWith().mockReturnValue(servicesWithoutPrivateBeta);
@@ -218,7 +218,7 @@ describe('Add user details controller', () => {
     req.body.forename = ' ';
     req.body.surname = '  ';
     req.body.userType = UserType.Support;
-    req.session = { user: { assignableRoles: [UserType.Citizen] } };
+    req.appSession = { user: { assignableRoles: [UserType.Citizen] } };
     req.scope.cradle.api = mockApi;
 
     when(mockApi.getAllServices).calledWith().mockReturnValue(servicesWithPrivateBeta);
@@ -245,7 +245,7 @@ describe('Add user details controller', () => {
     req.body._email = email;
     req.body.forename = name;
     req.body.surname = name;
-    req.session = { user: { assignableRoles: [UserType.Citizen] } };
+    req.appSession = { user: { assignableRoles: [UserType.Citizen] } };
     req.scope.cradle.api = mockApi;
 
     when(mockApi.getAllServices).calledWith().mockReturnValue(servicesWithPrivateBeta);
@@ -294,7 +294,7 @@ describe('Add user details controller', () => {
     req.body.forename = name;
     req.body.surname = name;
     req.body.userType = UserType.Professional;
-    req.session = { user: { assignableRoles: [] } };
+    req.appSession = { user: { assignableRoles: [] } };
     req.scope.cradle.api = mockApi;
 
     const expectedContent = {

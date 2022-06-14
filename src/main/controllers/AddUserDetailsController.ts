@@ -48,7 +48,7 @@ export class AddUserDetailsController extends RootController {
     if (users.length == 0) {
       const allServices = await req.scope.cradle.api.getAllServices();
       const hasPrivateBeta = hasPrivateBetaServices(allServices);
-      const enablePrivateBeta = req.session.user.assignableRoles.includes(UserType.Citizen);
+      const enablePrivateBeta = req.appSession.user.assignableRoles.includes(UserType.Citizen);
       const roleHint = hasPrivateBeta ? ROLE_HINT_WITH_PRIVATE_BETA : ROLE_HINT_WITHOUT_PRIVATE_BETA;
 
       return super.post(req, res, 'add-user-details', {
@@ -69,7 +69,7 @@ export class AddUserDetailsController extends RootController {
     if (!isObjectEmpty(error)) {
       const hasPrivateBeta = hasPrivateBetaServices(allServices);
       const roleHint = hasPrivateBeta ? ROLE_HINT_WITH_PRIVATE_BETA : ROLE_HINT_WITHOUT_PRIVATE_BETA;
-      const enablePrivateBeta = req.session.user.assignableRoles.includes(UserType.Citizen);
+      const enablePrivateBeta = req.appSession.user.assignableRoles.includes(UserType.Citizen);
 
       return super.post(req, res, 'add-user-details', {
         content: { user: user, showPrivateBeta: hasPrivateBeta, enablePrivateBeta: enablePrivateBeta, roleHint: roleHint },
@@ -85,7 +85,7 @@ export class AddUserDetailsController extends RootController {
       }});
     } else {
       const allRoles = await req.scope.cradle.api.getAllRoles();
-      const roleAssignment = constructAllRoleAssignments(allRoles, req.session.user.assignableRoles);
+      const roleAssignment = constructAllRoleAssignments(allRoles, req.appSession.user.assignableRoles);
       return super.post(req, res, 'add-user-roles', { content: { user: user, roles: roleAssignment } });
     }
   }
