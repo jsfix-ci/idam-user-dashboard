@@ -119,3 +119,10 @@ export const constructOptionsStringFromArray = (options: string[]): string => {
   }
   return output + options[options.length - 1];
 };
+
+export const base64URLEncode = (base64String: string): string => {
+  return base64String
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
+}

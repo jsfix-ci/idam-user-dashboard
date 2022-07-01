@@ -22,6 +22,7 @@ export type OIDCSession = {
     refreshToken: OIDCToken;
     idToken: OIDCToken;
   };
+  codeVerifier: string;
 }
 
 interface IdToken {
@@ -50,13 +51,15 @@ export class IdamAuth {
     private readonly axios = Axios.create({ baseURL: config.get('services.idam.url.api') })
   ) { }
 
-  public getAuthorizeRedirect() {
+  public getAuthorizeRedirect(codeChallenge: string) {
     const URL = this.IDAM_PUBLIC_URL + this.AUTHORIZATION_PATH;
     const params = new URLSearchParams({
       'client_id': this.clientId,
       'response_type': 'code',
       'redirect_uri': this.CALLBACK_URL,
-      'scope': this.clientScope
+      'scope': this.clientScope,
+      'code_challenge': codeChallenge,
+      'code_challenge_method': 'S256'
     });
 
     return URL + '?' + params.toString();
@@ -72,8 +75,8 @@ export class IdamAuth {
     return URL + '?' + params.toString();
   }
 
-  public authorizeCode(code: string): Promise<OIDCSession> {
-    return this.authorize(IdamGrantType.AUTH_CODE, { code });
+  public authorizeCode(code: string, codeVerifier: string): Promise<OIDCSession> {
+    return this.authorize(IdamGrantType.AUTH_CODE, { code, 'code_verifier': codeVerifier });
   }
 
   public authorizePassword(username: string, password: string): Promise<OIDCSession> {

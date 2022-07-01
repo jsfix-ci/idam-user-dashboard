@@ -10,6 +10,9 @@ import { IdamAuth, OIDCSession } from '../../app/idam-auth/IdamAuth';
 import { IdamAPI } from '../../app/idam-api/IdamAPI';
 import { OIDCToken } from '../../app/idam-auth/OIDCToken';
 import { defaultClient } from 'applicationinsights';
+import {base64URLEncode} from '../../utils/utils';
+
+import * as crypto from 'crypto';
 
 export class OidcMiddleware {
 
@@ -21,10 +24,15 @@ export class OidcMiddleware {
     const idamAuth = new IdamAuth(this.logger, defaultClient);
     const ACCESS_ROLE: string = config.get('RBAC.access');
 
-    app.get(LOGIN_URL, (req: Request, res: Response) => res.redirect(idamAuth.getAuthorizeRedirect()));
+    app.get(LOGIN_URL, (req: Request, res: Response) => {
+      const codeVerifier = this.generateCodeVerifier();
+      this.saveCodeVerifier(codeVerifier, req.session);
+      const codeChallenge = this.generateCodeChallenge(codeVerifier);
+      res.redirect(idamAuth.getAuthorizeRedirect(codeChallenge));
+    });
 
     app.get(OAUTH2_CALLBACK_URL, (req: Request, res: Response, next: NextFunction) => {
-      return idamAuth.authorizeCode(req.query.code as string)
+      return idamAuth.authorizeCode(req.query.code as string, req.session.codeVerifier)
         .then(newSession => this.saveConfiguredSession(newSession, req.session))
         .then(() => res.redirect(HOME_URL))
         .catch(error => next(error));
@@ -104,5 +112,17 @@ export class OidcMiddleware {
       session.tokens = newSession.tokens;
       session.save(() => resolve(session as AppSession));
     });
+  }
+
+  private saveCodeVerifier(codeVerifier: string, session: Partial<AppSession>) {
+    session.codeVerifier = codeVerifier;
+  }
+
+  private generateCodeVerifier(): string {
+    return base64URLEncode(crypto.randomBytes(50).toString('base64'));
+  }
+
+  private generateCodeChallenge(verifier: string): string {
+    return base64URLEncode(crypto.createHash('sha256').update(verifier).digest('base64'));
   }
 }
