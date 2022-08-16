@@ -1,6 +1,5 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% from "macros/csrf.njk" import csrfProtection %}
 {% from "macros/breadcrumb.njk" import breadcrumb %}
 {% from "macros/errorSummary.njk" import errorSummary %}
@@ -22,13 +21,12 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
       {{ errorSummary(error) }}
-      <h1 class="govuk-heading-l">Manage User</h1>
       <form method="POST" action="{{ urls.USER_DETAILS_URL }}">
         {{ csrfProtection(csrfToken) }}
         {{ govukInput({
           label: {
             text: "Search for an existing user",
-            classes: "govuk-label govuk-label--m",
+            classes: "govuk-label govuk-label--l",
             isPageHeading: true
           },
           hint: {
@@ -44,13 +42,6 @@
           text: "Search"
         }) }}
       </form>
-
-      {% if content.result %}
-        {{ govukWarningText({
-          text: content.result,
-          iconFallbackText: "Warning"
-        }) }}
-      {% endif %}
     </div>
   </div>
 {% endblock %}

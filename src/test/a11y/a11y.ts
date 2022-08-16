@@ -18,8 +18,7 @@ import {
   USER_SUSPEND_URL
 } from '../../main/utils/urls';
 
-const IGNORED_URLS = [urls.LOGIN_URL, urls.LOGOUT_URL, urls.OAUTH2_CALLBACK_URL, urls.ADD_USER_COMPLETION_URL, urls.USER_ACTIONS_URL,
-  urls.ADD_USER_DETAILS_URL, urls.EDIT_USER_URL, urls.ADD_USER_ROLES_URL];
+const IGNORED_URLS = [urls.LOGIN_URL, urls.LOGOUT_URL, urls.OAUTH2_CALLBACK_URL, urls.ADD_USER_COMPLETION_URL, urls.USER_ACTIONS_URL];
 
 
 const pa11y = require('pa11y');
@@ -127,7 +126,6 @@ describe('Accessibility', () => {
     await page.type('#username', PARENT_ROLE_EMAIL);
     await page.type('#password', testConfig.PASSWORD);
     await page.click('input[type="submit"]');
-    await page.waitForNavigation();
     cookies = await page.cookies(testConfig.TEST_URL + urls.HOME_URL);
     await page.close();
   };
